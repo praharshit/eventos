@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="main">
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<title>Auto-Complete</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href="ui_lib/assets/css/main.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Eventos</a>
+        </div>
+      </div>
+    </nav>
+    <div ng-controller="SearchCtrl">
+        <div class="container">
+            <div class="row search-box" style="margin-bottom:6em; margin-top:6em;">
+                <div style="height:100%; padding-right: 2em;">
+                    <input type="text" id="search_bar" class="search-input" ng-model="myModelId"/>
+                    <i id="search_btn" class="icon glyphicon glyphicon-search" style="height:100%; padding-right: 2em;cursor: pointer;"
+                       ng-click="search()"></i>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8" style="padding-left:4em;padding-right:4em;overflow-y: scroll;height:550px;">
+                <div class="row" ng-repeat="item in events track by $index">
+                    <div class="col-sm-12" style="border: gray;border-style: solid;padding: 2em;">
+                        <div class="card">
+                          <div class="card-body">
+                              <div style="background: #f6f7f8; border: 1px solid rgba(46,62,72,.12);border-radius: 8px;display: inline-block;min-height: 36px;min-width: 36px;padding: 8px;text-align: center;">
+                                  <span style="display: block;font-weight: 500;line-height: 1;text-align: center;color: #f13a59;font-size: 20px;">{{item.time.day}}</span>
+                                  <span style="color: rgba(46,62,72,.6);font-weight: 500;display: block;font-weight: 500;line-height: 1;text-align: center;">{{item.time.month}}</span>
+                              </div>
+                              <a target="_blank" rel="noopener noreferrer" href="{{item.link}}"
+                                 style="font-weight: 500;font-size: 20px;line-height: 1.45;text-decoration: underline;margin-left: 1.5em;">{{item.name}}</a>
+                              <!--<div ng-if="item.price > 0">{{item.price}}</div>-->
+                              <p class="card-text" style="max-height: 2.5em;overflow: hidden;margin-top: 1em;">{{item.description}}</p>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div id="map" class="col-sm-4" style="height:600px;width:100% padding:3em;"></div>-->
+        </div>
+    </div>
+    <script>
+        var input = document.getElementById("search_bar");
+        input.addEventListener("keyup", function(event) {
+            event.preventDefault();
+            if (event.keyCode === 13) {
+                document.getElementById("search_btn").click();
+            }
+        });
+        function initMap() {
+          // The location of Uluru
+          var uluru = {lat: -25.344, lng: 131.036};
+          // The map, centered at Uluru
+          var map = new google.maps.Map(
+              document.getElementById('map'), {zoom: 4, center: uluru});
+          // The marker, positioned at Uluru
+          var marker = new google.maps.Marker({position: uluru, map: map});
+        }
+    </script>
+	<script src="/ui_lib/js_lib/jquery.min.js"></script>
+    <script src="/ui_lib/js_lib/jquery-ui.min.js"></script>
+    <script src="/ui_lib/js_lib/angular.js"></script>
+    <script src="/ui_lib/js_lib/bootstrap.min.js"></script>
+    <script src="/ui_lib/js_lib/ui-bootstrap.js"></script>
+	<script src="/ui_lib/app.js"></script>
+	<script src="/ui_lib/controllers/search.js"></script>
+    <!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDztqhtUvhTRuaBn0ssGsKdBFjrO47OlZI&callback=initMap"></script>-->
+</body>
+</html>
