@@ -9,7 +9,8 @@
                "tokenizer":"standard",
                "filter":[
                   "lowercase",
-                  "english_stop"
+                  "english_stop",
+                  "synonym"
                ]
             },
             "process_text_stem":{
@@ -18,7 +19,8 @@
                "filter":[
                   "lowercase",
                   "english_stop",
-                  "porter_stem"
+                  "porter_stem",
+                  "synonym"
                ]
             },
             "search_text":{
@@ -26,7 +28,8 @@
                "tokenizer":"standard",
                "filter":[
                   "lowercase",
-                  "english_stop"
+                  "english_stop",
+                  "synonym"
                ]
             },
             "search_text_stem":{
@@ -35,14 +38,33 @@
                "filter":[
                   "lowercase",
                   "english_stop",
-                  "porter_stem"
+                  "porter_stem",
+                  "synonym"
                ]
             }
          },
          "filter":{
             "english_stop":{
                "type":"stop",
-               "stopwords":"_english_"
+               "stopwords":"english"
+            },
+            "synonym" : {
+                "type" : "synonym",
+                "synonyms" : [
+                    "comedy, laugh, humor, stand up, improv, parody => comedy",
+                    "tech, code, iot, analytics => tech ",
+                    "movie, film, actor. drama, show => movie",
+                    "exercise, fitness, yoga, workout, jog, swim, cardio => exercise",
+                    "music, opera, karaoke, musician, singer, concert, musical, band => music",
+                    "photography, camera, filming, filmmaking, editing, videography => photography",
+                    "sport, cycling, soccer, tennis, football association, baseball, basketball, game, athletics => sport",
+                    "pets, dog, cat, puppy, bird, kennel => pets",
+                    "food, cooking, cheese, organic, diet, catering, meat => food",
+                    "fashion, style, clothing, trend, designer, dress, apparel, boutique => fashion",
+                    "automobile, car, automotive, racing,  motorcycle => automobile",
+                    "career, job, professional, employment, employer, hire, internship, job fair, work => career",
+                    "education, teaching, school, scholarship, knowledge, university, college, graduate, degree, faculty => education"
+                ]
             }
          }
       }
@@ -50,7 +72,7 @@
   "mappings": {
     "_doc": {
       "_source": {
-        "enabled": false
+        "enabled": true
       },
       "properties": {
       	"text": {
@@ -83,13 +105,22 @@
         "duration": { "type": "long" },
         "price": { "type": "float" },
         "is_free": { "type": "boolean" },
-        "category":{ "type": "keyword" },
-        "meta_category":{ "type": "keyword"	},
+        "category":{
+          "properties": {
+            "name": {"type": "keyword"}
+          }
+        },
+        "meta_category":{
+        	"properties": {
+            	"name": {"type": "keyword"}
+        	}
+        },
         "venue":{
         	"properties": {
             "zip":  { "type": "integer" },
-            "name": { "type": "keyword" }
-          }
+            "name": { "type": "keyword" },
+            "location":{ "type": "geo_point"}
+        	}
         }
       }
     }

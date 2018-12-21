@@ -71,16 +71,36 @@ class EsSearch:
         self.index_name = index_name
         self.es = Elasticsearch()
 
-    def search(self, query):
-        search_query = {
-            "query": {
-                "multi_match": {
-                    "query": query,
-                    "fields": ["name^3", "description^2", "category.name^1", "meta_category.name^1"]
-                }
-            },
-            "size": 50
-        }
+    def search(self, query, lat, lon):
+        if(lat is None or lon is None):
+            search_query = {
+                "query": {
+                    "multi_match": {
+                        "query": query,
+                        "fields": ["name^3", "description^2", "category.name^1", "meta_category.name^1"]
+                    }
+                },
+                "size": 50
+            }
+        else:
+            search_query = {
+                "sort": [
+                    {
+                        "_geo_distance": {
+                            "venue.location": [lon,lat],
+                            "order": "asc",
+                            "unit": "km"
+                        }
+                    }
+                ],
+                "query": {
+                    "multi_match": {
+                        "query": query,
+                        "fields": ["name^3", "description^2", "category.name^1", "meta_category.name^1"]
+                    }
+                },
+                "size": 50
+            }
         response = self.es.search(index=self.index_name, doc_type="_doc", body=search_query)
 
         return [e['_source'] for e in response['hits']['hits']]

@@ -3,6 +3,7 @@ import json
 from flask import Flask, request, jsonify, Response, render_template, send_from_directory
 from service.index_search import Search
 from service.es_index import EsIndex, EsSearch
+import requests
 
 app = Flask(__name__)
 # search_instance = Search()
@@ -38,9 +39,22 @@ def serve_static(filename):
 
 @app.route('/search', methods=['POST'])
 def search():
+
+    print("Request received from ip:", request.remote_addr)
+    ip_location_url = "http://api.ipstack.com/"
+    access_key = "?access_key=564a1bf49449e3adc2985ee9bca32382"
+
+    url = ip_location_url + request.remote_addr + access_key
+    print(url)
+
+    ip_response = requests.get(url)
+    j = ip_response.text
+    ip_data = json.loads(j)
+
     requestBody = json.loads(request.data)
     print((requestBody['query']))
-    results = es_search.search(requestBody['query'])
+    results = es_search.search(requestBody['query'], ip_data['longitude'], ip_data['latitude'])
+    print({"events": results})
     return jsonify({"events": results})
 
 @app.route('/index', methods=['POST'])
