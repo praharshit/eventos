@@ -5,6 +5,13 @@ from service.index_search import Search
 from service.es_index import EsIndex, EsSearch
 import requests
 
+
+###
+#
+# authors: Praharshit, Akshay
+#
+###
+
 app = Flask(__name__)
 # search_instance = Search()
 es_index = EsIndex()

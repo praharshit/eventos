@@ -1,8 +1,13 @@
 import time
 import requests
 import math
-
 from pymongo import MongoClient
+
+###
+#
+# authors: Akshay
+#
+###
 
 
 meetup_domain_url = "https://api.meetup.com/"

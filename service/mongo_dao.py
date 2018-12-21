@@ -1,5 +1,11 @@
 from pymongo import MongoClient
 
+###
+#
+# authors: Praharshit
+#
+###
+
 conn = MongoClient("localhost", 27017)
 db = conn["eventos"]
 

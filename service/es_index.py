@@ -5,6 +5,11 @@ import uuid
 from html.parser import HTMLParser
 from bs4 import BeautifulSoup
 
+###
+#
+# authors: Praharshit, Akshay
+#
+###
 
 class EsDao(object):
     def __init__(self, index_name):

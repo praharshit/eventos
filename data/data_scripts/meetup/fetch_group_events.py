@@ -1,7 +1,12 @@
 import requests
 import time
-
 from pymongo import MongoClient
+
+###
+#
+# author: Akshay
+#
+###
 
 meetup_domain_url = "https://api.meetup.com/"
 find_groups = "find/groups"

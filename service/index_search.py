@@ -11,6 +11,11 @@ from collections import OrderedDict
 import service.mongo_dao
 from service.index import Tokenizer, LinguisticModules, InvertedIndex
 
+###
+#
+# authors: Praharshit, Chirag
+#
+###
 
 class Search:
     def __init__(self):
@@ -109,41 +114,3 @@ class Search:
             # desc_scores = sorted(sorted(desc_scores, key=lambda tup: (int(tup[0]))), key=lambda tup: (tup[1]), reverse=True)
             print(name_scores, desc_scores)
             return []
-
-
-
-
-# if __name__ == "__main__":
-#     index_filepath = input("Enter index filepath(E.g. output.csv if available in the same directory or fully qualified path): ")
-#     index = parse_index(index_filepath)
-#     print("Index loaded")
-#     input_queries = input("Enter comma seperated queries(E.g. query1, query2): ")
-#     results_output_filepath = input("Enter query results output filepath(E.g. results.txt): ")
-#     input_queries = [Query(query) for query in input_queries.split(",")]
-#     query_scores_per_document = {}
-#     for query in input_queries:
-#         docs_filtered = calc_documents_list(index)
-#         query_scores_per_document[query.original_query] = \
-#             list(filter(lambda s: s[1] != 0, [(doc, score_query_per_document(index, query.raw_query, doc))
-#                                               for doc in docs_filtered]))
-#     # Write query results
-#     with open(results_output_filepath, 'a') as out_results:
-#         time.ctime()
-#         out_results.write("-----------------------------------------------------------------------------------------\n")
-#         out_results.write("Results - "+time.strftime('%l:%M%p %Z on %b %d, %Y')+"\n")
-#         for query, scores in query_scores_per_document.items():
-#             out_results.write("\nQuery: "+query+"\n")
-#             scores = sorted(sorted(scores, key=lambda tup: (int(tup[0]))), key=lambda tup: (tup[1]), reverse=True)
-#             if scores:
-#                 [out_results.write("DOC "+score[0]+" - "+str(score[1])+"\n") for score in scores]
-#             else:
-#                 out_results.write("No document matches found\n")
-#
-#     # Print query results
-#     print("Query ranked results")
-#     for query, scores in query_scores_per_document.items():
-#         print("")
-#         print("Query -", query)
-#         if not scores: print("No document matches found")
-#         [print("DOC",score[0],"-",str(score[1]))
-#          for score in sorted(sorted(scores, key=lambda tup: (int(tup[0]))), key=lambda tup: (tup[1]), reverse=True)]
